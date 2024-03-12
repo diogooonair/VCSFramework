@@ -1,3 +1,4 @@
 UPDATE 1.2.
 Added LevelStreaming management.
 Fixed Niagara ANS.
+Added ForceFunctionCall Anim Notify. So you re able to execute functions when the animnotify is called.
