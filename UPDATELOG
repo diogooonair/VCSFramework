@@ -3,3 +3,4 @@ Added LevelStreaming management.
 Fixed Niagara ANS.
 Added ForceFunctionCall Anim Notify. So you re able to execute functions when the animnotify is called.
 Added GetClosestActorToLeftOrRightOfTarget that gets the closest actor to left or right of the current target actor. Our use to it, we are currently using this to do fast swaps based on mouse movement.
+Custom Input Debugging
