@@ -7,5 +7,5 @@ Custom Input Debugging
 Added bShouldTarget to CombatComponent to allow for targetting input changes.
 Also changed Input Trigger to completed instead of started.
 Added AllowCustomAction to the AILibrary, we are using it for Dash Targetting attack
-Added a new anim notify LoopAnimation this animation notify state will loop the animation from it s starting point to the end point until a certain condicion is met
+Added a new anim notify LoopAnimation this animation notify state will loop the animation from it s starting point to the end point until a certain condicion is met, It has also an optional function to skip to the next animation on the montage once the condition is met.
 Added LoopCondiction overridable function to InputFunctionOBJ.
