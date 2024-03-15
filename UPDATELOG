@@ -6,3 +6,4 @@ Added GetClosestActorToLeftOrRightOfTarget that gets the closest actor to left o
 Custom Input Debugging
 Added bShouldTarget to CombatComponent to allow for targetting input changes.
 Also changed Input Trigger to completed instead of started.
+Added AllowCustomAction to the AILibrary, we are using it for Dash Targetting attack
