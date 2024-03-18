@@ -11,3 +11,4 @@ Added a new anim notify LoopAnimation this animation notify state will loop the 
 Added LoopCondiction overridable function to InputFunctionOBJ.
 Fixed bug when Input Tracking didn t stop (5.3) after allowcustominput
 Added a Function to VCS_InputFunctionOBJ to stop the anim notify.
+Made VCS_InputFunctionOBJ Blueprint callable, so you can use it as a function organizer, we are using that to our advantage on an ability system working with a datatable
