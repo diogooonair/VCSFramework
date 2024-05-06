@@ -13,3 +13,7 @@ Added LoopCondiction overridable function to InputFunctionOBJ.
 Fixed bug when Input Tracking didn t stop (5.3) after allowcustominput
 Added a Function to VCS_InputFunctionOBJ to stop the anim notify.
 Made VCS_InputFunctionOBJ Blueprint callable, so you can use it as a function organizer, we are using that to our advantage on an ability system working with a datatable
+
+UPDATE 1.3 (UNDER DEVELOPMENT) // Lines are added once the freatures are complete
+5.4 Update
+Improved Movement with better flowing parkour.
