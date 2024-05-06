@@ -1,0 +1,36 @@
+{
+	"FileVersion": 3,
+	"Version": 1,
+	"VersionName": "1.2.1",
+	"FriendlyName": "VCSFramework",
+	"Description": "A general framework for AAA GAMES",
+	"Category": "Other",
+	"CreatedBy": "Diogo Ventura",
+	"CreatedByURL": "https://venturacreststudios.com",
+	"DocsURL": "https://github.com/diogooonair/VCSFramework",
+	"MarketplaceURL": "com.epicgames.launcher://ue/marketplace/product/61e5a6c5f22a43cf84604c48ff803925",
+	"SupportURL": "https://discord.gg/QZ9QX2ry",
+	"EngineVersion": "5.3.0",
+	"CanContainContent": true,
+	"Installed": true,
+	"SupportedTargetPlatforms": [
+		"Win64"
+	],
+	"Modules": [
+		{
+			"Name": "VCSFramework",
+			"Type": "Runtime",
+			"LoadingPhase": "Default"
+		}
+	],
+	"Plugins": [
+		{
+			"Name": "EnhancedInput",
+			"Enabled": true
+		},
+		{
+			"Name": "Niagara",
+			"Enabled": true
+		}
+	]
+}
