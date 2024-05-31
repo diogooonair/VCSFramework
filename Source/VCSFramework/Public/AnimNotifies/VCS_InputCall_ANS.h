@@ -35,6 +35,10 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Notify")
 	bool bStopOnMiss;
 
+	//Stamina Cost of action
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Notify")
+	float Stamina;
+
 	//Enable Hold Input
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Notify")
 	bool bHold;

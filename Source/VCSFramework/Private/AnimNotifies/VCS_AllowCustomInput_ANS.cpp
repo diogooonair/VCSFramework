@@ -12,14 +12,17 @@ void UVCS_AllowCustomInput_ANS::NotifyBegin(USkeletalMeshComponent* MeshComp, UA
 {
 	Super::NotifyBegin(MeshComp, Animation, TotalDuration, EventReference);
 
-	UVCS_StateManagerComponent_AC* component = MeshComp->GetOwner()->FindComponentByClass<UVCS_StateManagerComponent_AC>();
-
-	if(!component)return;
-	
-	for(int i = 0; i < ActionList.Num(); i++)
+	if(AActor* Actor = MeshComp->GetOwner())
 	{
-		component->AddActionInput(ActionList[i]);
+		UVCS_StateManagerComponent_AC* component = Actor->FindComponentByClass<UVCS_StateManagerComponent_AC>();
+		if(!component)return;
+	
+		for(int i = 0; i < ActionList.Num(); i++)
+		{
+			component->AddActionInput(ActionList[i]);
+		}
 	}
+	
 }
 
 void UVCS_AllowCustomInput_ANS::NotifyEnd(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation,
@@ -27,11 +30,16 @@ void UVCS_AllowCustomInput_ANS::NotifyEnd(USkeletalMeshComponent* MeshComp, UAni
 {
 	Super::NotifyEnd(MeshComp, Animation, EventReference);
 
-	UVCS_StateManagerComponent_AC* component = MeshComp->GetOwner()->FindComponentByClass<UVCS_StateManagerComponent_AC>();
-
-	if(!component)return;
-	for(int i = 0; i < ActionList.Num(); i++)
+	if(AActor* Actor = MeshComp->GetOwner())
 	{
-		component->ClearAddedInput(ActionList[i]);
+		UVCS_StateManagerComponent_AC* component = Actor->FindComponentByClass<UVCS_StateManagerComponent_AC>();
+		if(!component)return;
+		for(int i = 0; i < ActionList.Num(); i++)
+		{
+			component->ClearAddedInput(ActionList[i]);
+		}
 	}
+	
+
+	
 }

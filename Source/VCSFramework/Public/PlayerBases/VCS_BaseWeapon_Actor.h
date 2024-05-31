@@ -20,6 +20,9 @@ protected:
 public:	
 	// Sets default values for this actor's properties
 	AVCS_BaseWeapon_Actor();
+
+	UFUNCTION(BlueprintCallable)
+	void SpawnFixer();
 	
 
 	

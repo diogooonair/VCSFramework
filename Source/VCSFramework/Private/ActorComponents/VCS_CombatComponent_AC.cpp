@@ -22,9 +22,9 @@ UVCS_CombatComponent_AC::UVCS_CombatComponent_AC() : TargetActor(nullptr),
 {
 	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
 	// off to improve performance if you don't need them.
-	PrimaryComponentTick.bCanEverTick = true;
 
-	Health = DefaultHealth, Stamina = DefaultStamina,Armor = DefaultArmor;
+	Stamina = DefaultStamina,Armor = DefaultArmor, Health = DefaultHealth;
+	PrimaryComponentTick.bCanEverTick = true;
 }
 
 
@@ -181,6 +181,24 @@ float UVCS_CombatComponent_AC::TakeHealth(float Damage, bool bCountArmor)
 	return Health;
 }
 
+float UVCS_CombatComponent_AC::GiveArmor(float ExtraArmor)
+{
+	Armor += ExtraArmor;
+	return Armor;
+}
+
+float UVCS_CombatComponent_AC::SetStamina(float StaminaValue)
+{
+	Stamina = StaminaValue;
+	return Stamina;
+}
+
+float UVCS_CombatComponent_AC::TakeStamina(float StaminaValue)
+{
+	Stamina -= StaminaValue;
+	return Stamina;
+}
+
 void UVCS_CombatComponent_AC::Target(AActor* actor)
 {
 	TargetActor = actor;
@@ -206,13 +224,13 @@ void UVCS_CombatComponent_AC::PerformAttack(FName AttackingState, UAnimMontage* 
 
 
 	Cast<AVCS_CharacterBase>(GetOwner())->PlayAnimMontage(Montage, montagespeed);
-	FTimerHandle timer;
+	/*FTimerHandle timer;
 	GetWorld()->GetTimerManager().SetTimer(
 	timer, 
 	this, // the owning object
 	&UVCS_CombatComponent_AC::OnMontageEnd, // function to call on elapsed
 	Montage->GetPlayLength() * montagespeed, // float delay until elapsed
-	false);
+	false);*/
 }
 
 void UVCS_CombatComponent_AC::ResetState()
@@ -367,34 +385,28 @@ void UVCS_CombatComponent_AC::PerformFinisher(ACharacter* Killer, ACharacter* Vi
 		// Ensure that both the killer and the victim are valid characters
 		return;
 	}
-
+	
 	Killer->FindComponentByClass<UVCS_StateManagerComponent_AC>()->CurrentState = KillerState;
 	Victim->FindComponentByClass<UVCS_StateManagerComponent_AC>()->CurrentState = VictimState;
 
 	// Calculate the direction between the killer and the victim
 	FVector Direction = Victim->GetActorLocation() - Killer->GetActorLocation();
 	Direction.Normalize();
-
+	if(DesiredDistance != 0.f) {
 	// Calculate the new positions for the killer and the victim
-	FVector KillerNewLocation = Victim->GetActorLocation() - (Direction * DesiredDistance);
-	FVector VictimNewLocation = Killer->GetActorLocation() + (Direction * DesiredDistance);
+		FVector KillerNewLocation = Victim->GetActorLocation() - (Direction * DesiredDistance);
+		FVector VictimNewLocation = Killer->GetActorLocation() + (Direction * DesiredDistance);
 
-	// Set the new positions for the characters
-	Killer->SetActorLocation(KillerNewLocation);
-	Victim->SetActorLocation(VictimNewLocation);
-	
+		// Set the new positions for the characters
+		Killer->SetActorLocation(KillerNewLocation);
+		Victim->SetActorLocation(VictimNewLocation);
+	}
 
 	// Play the killer's anim montage
-	if (Killer->GetMesh())
-	{
-		Killer->PlayAnimMontage(KillerMontage);
-	}
+	Killer->PlayAnimMontage(KillerMontage);
 
 	// Play the victim's anim montage
-	if (Victim->GetMesh())
-	{
-		Victim->PlayAnimMontage(VictimMontage);
-	}
+	Victim->PlayAnimMontage(VictimMontage);
 }
 
 AActor* UVCS_CombatComponent_AC::GetTargetActor()

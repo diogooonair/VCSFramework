@@ -3,7 +3,7 @@
 
 #include "PlayerBases/VCS_BaseWeapon_Actor.h"
 #include "Components/StaticMeshComponent.h"
-
+#include "GameFramework/Character.h"
 
 
 // Sets default values
@@ -17,21 +17,43 @@ AVCS_BaseWeapon_Actor::AVCS_BaseWeapon_Actor()
 	WeaponStaticMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("StaticMeshComponent"));
 	WeaponStaticMesh->SetupAttachment(RootComponent);
 	
-	
+}
+
+void AVCS_BaseWeapon_Actor::SpawnFixer()
+{
+	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("ue2"));
+
+	if(WeaponMeshSkeletal)
+	{
+		WeaponSkeletalMesh->SetSkeletalMesh(WeaponMeshSkeletal);
+		
+	}
+	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("ue1"));
+	if(WeaponMeshSkeletal)
+	{
+		WeaponStaticMesh->SetStaticMesh(WeaponMeshStatic);
+		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::White, TEXT("ue"));
+	}
 }
 
 void AVCS_BaseWeapon_Actor::BeginPlay()
 {
 	Super::BeginPlay();
+	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("ue2"));
+	SetActorEnableCollision(false);
 
 	if(WeaponMeshSkeletal)
 	{
 		WeaponSkeletalMesh->SetSkeletalMesh(WeaponMeshSkeletal);
+		
 	}
-
-	if(WeaponMeshSkeletal)
+	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("ue1"));
+	if(WeaponMeshStatic)
 	{
 		WeaponStaticMesh->SetStaticMesh(WeaponMeshStatic);
+		//WeaponStaticMesh->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+		//WeaponStaticMesh->AttachToComponent(Cast<ACharacter>(GetOwner())->GetMesh(), FAttachmentTransformRules::SnapToTargetNotIncludingScale, "Katana");
+		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::White, TEXT("ue3"));
 	}
 }
 

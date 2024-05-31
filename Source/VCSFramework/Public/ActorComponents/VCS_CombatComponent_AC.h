@@ -63,6 +63,16 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category="CombatComponent")
 	float TakeHealth(float Damage, bool bCountArmor);
+	
+	UFUNCTION(BlueprintCallable, Category="CombatComponent")
+    float GiveArmor(float ExtraArmor);
+
+	UFUNCTION(BlueprintCallable, Category="CombatComponent")
+	float SetStamina(float StaminaValue);
+    
+    UFUNCTION(BlueprintCallable, Category="CombatComponent")
+    float TakeStamina(float StaminaValue);
+    
 	UFUNCTION(BlueprintCallable, Category="CombatComponent")
 	void Target(AActor* actor);
 	UFUNCTION(BlueprintCallable, Category="CombatComponent")

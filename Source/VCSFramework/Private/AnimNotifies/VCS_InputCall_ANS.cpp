@@ -9,6 +9,7 @@
 #include "AnimNotifies/VCS_InputFunction_OBJ.h"
 #include "Engine/LocalPlayer.h"
 #include "Animation/AnimInstance.h"
+#include "PlayerBases/VCS_CharacterBase.h"
 
 bool triggered = false;
 void UVCS_InputCall_ANS::NotifyBegin(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation,
@@ -45,6 +46,23 @@ void UVCS_InputCall_ANS::NotifyEnd(USkeletalMeshComponent* MeshComp, UAnimSequen
 	
 	Super::NotifyEnd(MeshComp, Animation, EventReference);
 
+	UAnimInstance* AnimInstance = MeshComp->GetAnimInstance();
+
+	if(AnimInstance)
+	{
+		if(UAnimMontage* mont = AnimInstance->GetCurrentActiveMontage())
+		{
+			if (AnimInstance->GetCurrentActiveMontage()->GetName() != Animation->GetName())
+			{
+				UnBindInput(MeshComp);
+				return;
+			}
+		}
+		
+		
+	}
+	
+
 	APlayerController* PC = Cast<APlayerController>(MeshComp->GetOwner()->GetInstigatorController());
 	//Stop Playing montage on input miss, Combo only
 
@@ -76,6 +94,12 @@ void UVCS_InputCall_ANS::InputTrigger(const FInputActionInstance& ActionInstance
 		{
 			if(ActionListCopy[i].sFunctionCall)
 				ActionListCopy[i].sFunctionCall.GetDefaultObject()->FunctionTriggered(ActionInstance.GetTriggeredTime(), OwnerMesh);
+
+			UVCS_CombatComponent_AC* Component = Cast<AVCS_CharacterBase>(OwnerMesh->GetOwner())->FindComponentByClass<UVCS_CombatComponent_AC>();
+			float CurrentStamina = Component->GetStamina();
+			if(CurrentStamina < ActionListCopy[i].Stamina)continue;
+			Component->TakeStamina(ActionListCopy[i].Stamina);
+			
 			ActionListCopy.RemoveAt(i);
 		}
 	}
@@ -94,6 +118,13 @@ void UVCS_InputCall_ANS::InputStarted(const FInputActionInstance& ActionInstance
 
 			if(ActionListCopy[i].sFunctionCall)
 				ActionListCopy[i].sFunctionCall.GetDefaultObject()->FunctionTriggered(0, OwnerMesh);
+
+			UVCS_CombatComponent_AC* Component = Cast<AVCS_CharacterBase>(OwnerMesh->GetOwner())->FindComponentByClass<UVCS_CombatComponent_AC>();
+			float CurrentStamina = Component->GetStamina();
+			if(CurrentStamina < ActionListCopy[i].Stamina && ActionListCopy[i].bStopOnMiss)continue;
+
+			
+			Component->TakeStamina(ActionListCopy[i].Stamina);
 			
 			ActionListCopy.RemoveAt(i);
 		}
